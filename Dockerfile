@@ -5,6 +5,7 @@ MAINTAINER Dongliang He hdlmat@gmail.com
 #COPY ./druid-0.9.2-bin.tar.gz /opt/
 #COPY ./zookeeper-3.4.6.tar.gz /opt/
 COPY ./entrypoint.sh /entrypoint.sh
+RUN mkdir -p /work/csv/
 
 RUN cd /opt/ \
     && curl "http://static.druid.io/artifacts/releases/druid-0.9.2-bin.tar.gz" -o /opt/druid-0.9.2-bin.tar.gz \
@@ -16,7 +17,6 @@ RUN cd /opt/ \
     && rm -rf *.tar.gz \
     && gzip -c -d /opt/druid/quickstart/wikiticker-2015-09-12-sampled.json.gz > "/opt/druid/quickstart/wikiticker-2015-09-12-sampled.json" \
     && cp /opt/zookeeper/conf/zoo_sample.cfg /opt/zookeeper/conf/zoo.cfg \
-    && mkdir /work \
     && curl https://bootstrap.pypa.io/get-pip.py | python \
     && pip install supervisor \
     && chmod u+x /entrypoint.sh \
